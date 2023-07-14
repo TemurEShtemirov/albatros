@@ -13,13 +13,7 @@ export default function Header() {
           Albatross
         </a>
       </h1>
-      <button
-        title="Dark mode"
-        className="theme-button"
-      
-      >
-        🌘
-      </button>
+
     </header>
   );
 }
