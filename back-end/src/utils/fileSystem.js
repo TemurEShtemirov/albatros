@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+import fs from  'fs'
+import path from 'path'
 
-function readFile(filePath, fileName) {
+export function readFileName(filePath, fileName) {
   try {
     const data = JSON.parse(
       fs.readFileSync(path.join(process.cwd(), filePath, fileName))
@@ -13,7 +13,7 @@ function readFile(filePath, fileName) {
   }
 }
 
-function writeFile(filePath, fileName, data) {
+export function writeFileName(filePath, fileName, data) {
   try {
     return fs.writeFileSync(
       path.join(process.cwd(), filePath, fileName),
@@ -25,7 +25,7 @@ function writeFile(filePath, fileName, data) {
   }
 }
 
-module.exports = {
-  readFile,
-  writeFile
-};
+// module.exports = {
+  // readFileName,
+  // writeFileName
+// };

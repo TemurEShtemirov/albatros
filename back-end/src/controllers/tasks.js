@@ -1,10 +1,11 @@
-import { readFile, writeFile } from '../utils/fileSystem.js';
+import { readFileName } from'../utils/fileSystem.js'
+import { writeFileName } from '../utils/fileSystem.js'
 import { join } from 'path';
 import { parseTaskBody } from '../utils/helpers.js';
 
 export const GET_TASKS = (req, res) => {
   try {
-    res.status(200).json(readFile(join('src', 'db'), 'tasks.json'));
+    res.status(200).json(readFileName(join('src', 'data'), 'tasks.json'));
   } catch (error) {
     res.status(500).json({
       error: error.stack,
@@ -16,7 +17,7 @@ export const GET_TASK_BY_ID = (req, res) => {
   try {
     const id = req.params.id;
 
-    const tasks = readFile(join('src', 'db'), 'tasks.json');
+    const tasks = readFileName(join('src', 'data'), 'tasks.json');
 
     const task = tasks.find((task) => task.id == id);
 
@@ -35,7 +36,7 @@ export const GET_TASK_BY_ID = (req, res) => {
 
 export const ADD_TASKS = (req, res) => {
   try {
-    const tasks = readFile(join('src', 'db'), 'tasks.json');
+    const tasks = readFileName(join('src', 'data'), 'tasks.json');
 
     tasks.push({
       id: tasks.at(-1)?.id + 1 || 1,
@@ -47,7 +48,7 @@ export const ADD_TASKS = (req, res) => {
       categoryId: 0,
     });
 
-    writeFile(join('src', 'db'), 'tasks.json', tasks);
+    writeFileName(join('src', 'data'), 'tasks.json', tasks);
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({
@@ -60,11 +61,11 @@ export const REMOVE_TASK = (req, res) => {
   try {
     const id = req.params.id;
 
-    const tasks = readFile(join('src', 'db'), 'tasks.json');
+    const tasks = readFileName(join('src', 'data'), 'tasks.json');
 
     const filteredTasks = tasks.filter((task) => task.id != id);
 
-    writeFile(join('src', 'db'), 'tasks.json', filteredTasks);
+    writeFileName(join('src', 'data'), 'tasks.json', filteredTasks);
 
     res.status(200).json(filteredTasks);
   } catch (error) {
@@ -93,7 +94,7 @@ export const UPDATE_TASK = (req, res) => {
 
     const { date, categoryId, completed, body, smallBody } = data;
 
-    const tasks = readFile(join('src', 'db'), 'tasks.json');
+    const tasks = readFileName(join('src', 'data'), 'tasks.json');
     const task = tasks?.find((task) => task.id == id);
 
     if (!task) {
@@ -108,7 +109,7 @@ export const UPDATE_TASK = (req, res) => {
     task.smallBody = smallBody ?? task.smallBody;
     task.completed = completed ?? task.completed;
 
-    writeFile(join('src', 'db'), 'tasks.json', tasks);
+    writeFileName(join('src', 'data'), 'tasks.json', tasks);
 
     res.status(200).json(tasks);
   } catch (error) {

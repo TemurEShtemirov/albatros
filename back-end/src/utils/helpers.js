@@ -1,4 +1,4 @@
-const { updateTaskSchema } = require('./schemas.js');
+import { updateTaskSchema } from './schemas.js'
 
 function parseTaskBody(body) {
   try {
@@ -8,6 +8,6 @@ function parseTaskBody(body) {
   }
 }
 
-module.exports = {
+export {
   parseTaskBody
 };
